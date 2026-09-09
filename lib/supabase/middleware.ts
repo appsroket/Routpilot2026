@@ -7,10 +7,14 @@ import { NextResponse, type NextRequest } from "next/server";
  *
  * The response carries any refreshed auth cookies — callers that build their
  * own response (e.g. a redirect) must copy these cookies over so the session
- * stays in sync.
+ * stays in sync. The forwarded request also carries an `x-pathname` header so
+ * Server Components (e.g. the dashboard layout) can read the current path.
  */
 export async function updateSession(request: NextRequest) {
-  let response = NextResponse.next({ request });
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+
+  let response = NextResponse.next({ request: { headers: requestHeaders } });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -24,7 +28,9 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value),
           );
-          response = NextResponse.next({ request });
+          response = NextResponse.next({
+            request: { headers: requestHeaders },
+          });
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options),
           );

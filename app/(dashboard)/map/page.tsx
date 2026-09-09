@@ -1,8 +1,13 @@
+import { PageHeader } from "@/components/page-header";
+
 export default function MapPage() {
   return (
     <div>
-      <h1 className="font-heading text-2xl font-bold text-foreground">Map</h1>
-      <p className="mt-2 text-sm text-muted-foreground">Coming soon.</p>
+      <PageHeader
+        title="Map & Routes"
+        description="Visualize and optimize the day's routes."
+      />
+      <p className="text-sm text-muted-foreground">Coming soon.</p>
     </div>
   );
 }
