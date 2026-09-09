@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
+import { hasActiveAccess } from "@/lib/gate";
 import { AppShell } from "@/components/dashboard/app-shell";
 
 export default async function DashboardLayout({
@@ -28,6 +29,13 @@ export default async function DashboardLayout({
 
   if (!profile?.company_name) {
     redirect("/onboarding");
+  }
+
+  // Subscription gate: without active access, only /billing and /settings are
+  // reachable; everything else redirects to /billing.
+  const exempt = pathname.startsWith("/billing") || pathname.startsWith("/settings");
+  if (!exempt && !(await hasActiveAccess(user))) {
+    redirect("/billing?gated=1");
   }
 
   return (
