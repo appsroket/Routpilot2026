@@ -1,8 +1,11 @@
+import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
+
 export default function JobsPage() {
   return (
     <div>
-      <h1 className="font-heading text-2xl font-bold text-foreground">Jobs</h1>
-      <p className="mt-2 text-sm text-muted-foreground">Coming soon.</p>
+      <PageHeader title="Jobs" action={<Button>New job</Button>} />
+      <p className="text-sm text-muted-foreground">Coming soon.</p>
     </div>
   );
 }
