@@ -40,6 +40,7 @@ export function MapRoutePlanner({
   const [jobs, setJobs] = React.useState<Job[]>(initialJobs);
   const [polyline, setPolyline] = React.useState<string | null>(null);
   const [optimizing, setOptimizing] = React.useState(false);
+  const [sending, setSending] = React.useState(false);
   const [, startTransition] = React.useTransition();
 
   // Reset when the server data changes (date/tech switch).
@@ -113,8 +114,30 @@ export function MapRoutePlanner({
     }
   }
 
-  function handleSend() {
-    toast.info("Sending to the technician is wired up in the next step.");
+  async function handleSend() {
+    if (!technician || jobs.length === 0) return;
+    setSending(true);
+    try {
+      const res = await fetch("/api/send-route", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ technicianId: technician.id, date }),
+      });
+      const data = (await res.json()) as { ok: boolean; error?: string; stops?: number };
+      if (!data.ok) {
+        toast.error(data.error ?? "Could not send the route.");
+        return;
+      }
+      toast.success(
+        `Route sent to ${technician.name} (${data.stops ?? jobs.length} ${
+          (data.stops ?? jobs.length) === 1 ? "stop" : "stops"
+        }).`,
+      );
+    } catch {
+      toast.error("Could not reach the SMS service.");
+    } finally {
+      setSending(false);
+    }
   }
 
   if (!technician) {
@@ -145,8 +168,12 @@ export function MapRoutePlanner({
           {optimizing ? <Loader2 className="animate-spin" /> : <Route className="size-4" />}
           Optimize Route
         </Button>
-        <Button variant="outline" onClick={handleSend} disabled={jobs.length === 0}>
-          <Send className="size-4" />
+        <Button
+          variant="outline"
+          onClick={handleSend}
+          disabled={sending || jobs.length === 0}
+        >
+          {sending ? <Loader2 className="animate-spin" /> : <Send className="size-4" />}
           Send to Technician
         </Button>
         {routableCount < 2 && jobs.length > 0 && (
