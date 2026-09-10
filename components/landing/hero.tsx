@@ -35,7 +35,7 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={100}>
-          <h1 className="mt-6 font-heading text-5xl font-extrabold leading-[1.05] tracking-tight text-white md:text-7xl">
+          <h1 className="mt-6 font-heading text-[2rem] font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-7xl">
             Turn Wasted Drive Time Into{" "}
             <span className="text-cta">Billable Hours</span>
           </h1>
