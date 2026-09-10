@@ -28,22 +28,25 @@ npx tsc --noEmit  # type-check
 
 ## Design system
 
-Dark by default. Tokens live in `app/globals.css` (as CSS variables, wired to
-shadcn/ui) and `tailwind.config.ts`.
+Light by default — purple + gold. Tokens live in `app/globals.css` (as CSS
+variables, wired to shadcn/ui) and `tailwind.config.ts`.
 
-| Role            | Value     | Tailwind             |
-| --------------- | --------- | -------------------- |
-| Background      | `#0a0a0a` | `bg-background`      |
-| Surface / cards | `#111111` | `bg-card`            |
-| Border          | `#1f1f1f` | `border-border`      |
-| Accent (lime)   | `#b8f724` | `bg-primary` (black text) |
-| Text primary    | `#ffffff` | `text-foreground`    |
-| Text secondary  | `#a0a0a0` | `text-muted-foreground` |
+| Role             | Value     | Tailwind             |
+| ---------------- | --------- | -------------------- |
+| Background       | `#f8f7fe` | `bg-background`      |
+| Surface / cards  | `#ffffff` | `bg-card`            |
+| Border           | `#e4e1f0` | `border-border`      |
+| Accent (purple)  | `#5a2fda` | `bg-primary` (white text) |
+| CTA (gold)       | `#fbc21a` | `bg-cta` (near-black text) |
+| Text primary     | `#1b1930` | `text-foreground`    |
+| Text secondary   | `#6b6b7b` | `text-muted-foreground` |
 
 - Fonts: **Syne** for headings (`font-heading`, `--font-syne`), **DM Sans**
   for body/UI (`font-sans`, `--font-display`).
-- Border radius: **8px max** (`--radius: 0.5rem`).
-- No gradients, no blobs. Buttons are lime background with black text.
+- Border radius: **12px** (`--radius: 0.75rem`).
+- Primary buttons are purple with white text; marketing CTAs use gold
+  (`bg-cta`) with near-black text. Purple gradient bands (hero, stats, final
+  CTA) carry white text.
 
 ## Structure
 
@@ -68,7 +71,7 @@ Maps, Twilio, Stripe, app URL). `.env.local` is git-ignored.
 
 ## Conventions
 
-- Keep the app dark-mode-first; use the semantic Tailwind tokens above rather
+- Keep the app light-mode-first; use the semantic Tailwind tokens above rather
   than raw hex where possible.
 - Server-only secrets (`SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`,
   `TWILIO_*`, `GOOGLE_MAPS_API_KEY`) must never be imported into client

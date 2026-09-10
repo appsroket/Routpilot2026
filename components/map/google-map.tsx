@@ -42,7 +42,7 @@ export function GoogleMap({ stops, homeBase, color, polyline }: Props) {
           zoom: homeBase ? 11 : 4,
           disableDefaultUI: true,
           zoomControl: true,
-          backgroundColor: "#0a0a0a",
+          backgroundColor: "#eef0f6",
         });
         setReady(true);
       } catch {
@@ -97,13 +97,13 @@ export function GoogleMap({ stops, homeBase, color, polyline }: Props) {
         const marker = new google.maps.Marker({
           position: { lat: stop.lat, lng: stop.lng },
           map,
-          label: { text: String(stop.label), color: "#0a0a0a", fontWeight: "700", fontSize: "12px" },
+          label: { text: String(stop.label), color: "#ffffff", fontWeight: "700", fontSize: "12px" },
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 14,
             fillColor: color,
             fillOpacity: 1,
-            strokeColor: "#0a0a0a",
+            strokeColor: "#ffffff",
             strokeWeight: 2,
           },
         });

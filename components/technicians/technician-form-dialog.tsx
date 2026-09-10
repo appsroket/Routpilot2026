@@ -25,7 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const DEFAULT_COLOR = "#b8f724";
+const DEFAULT_COLOR = "#5a2fda";
 const initialState: TechnicianFormState = { ok: false, error: null };
 
 type Props = {

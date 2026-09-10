@@ -90,7 +90,7 @@ function SortableRow({ job, index, color }: { job: Job; index: number; color: st
       </button>
 
       <span
-        className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-[#0a0a0a]"
+        className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
         style={{ backgroundColor: color }}
       >
         {index + 1}

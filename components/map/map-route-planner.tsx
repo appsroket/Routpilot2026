@@ -49,7 +49,7 @@ export function MapRoutePlanner({
     setPolyline(null);
   }, [initialJobs]);
 
-  const color = technician?.color ?? "#b8f724";
+  const color = technician?.color ?? "#5a2fda";
   const mapStops: MapStop[] = jobs
     .map((j, i) => ({ id: j.id, lat: j.lat as number, lng: j.lng as number, label: i + 1 }))
     .filter((s) => Number.isFinite(s.lat) && Number.isFinite(s.lng));

@@ -14,12 +14,12 @@ export const STATUS_LABELS: Record<JobStatus, string> = {
   canceled: "Canceled",
 };
 
-// Tailwind classes for each status badge (dark-theme, subtle fills).
+// Tailwind classes for each status badge (light theme, subtle fills).
 export const STATUS_CLASSES: Record<JobStatus, string> = {
   scheduled: "bg-muted text-muted-foreground border-border",
-  en_route: "bg-primary/15 text-primary border-primary/30",
-  completed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
-  canceled: "bg-red-500/10 text-red-400 border-red-500/30",
+  en_route: "bg-primary/10 text-primary border-primary/25",
+  completed: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  canceled: "bg-red-50 text-red-700 border-red-200",
 };
 
 /** "09:00:00" | "09:00" → "9:00 AM"; empty/invalid → "". */

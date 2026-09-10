@@ -186,6 +186,92 @@ export async function deleteJob(id: string) {
   return { ok: true, error: null };
 }
 
+// ---- Bulk import ------------------------------------------------------------
+
+const importRowSchema = z.object({
+  title: z.string().trim().min(1, "Each job needs a title.").max(120),
+  customer_name: z.string().trim().max(120).optional().default(""),
+  address: z.string().trim().max(300).optional().default(""),
+  time_window_start: z.string().trim().max(5).optional().nullable().default(null),
+  time_window_end: z.string().trim().max(5).optional().nullable().default(null),
+  duration_min: z.coerce.number().int().min(1).max(1440),
+  notes: z.string().trim().max(2000).optional().default(""),
+  lat: z.number().finite().nullable().optional().default(null),
+  lng: z.number().finite().nullable().optional().default(null),
+});
+
+const importSchema = z.object({
+  scheduled_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Pick a valid date."),
+  technician_id: z.string().trim().optional().default(""),
+  jobs: z.array(importRowSchema).min(1, "Nothing to import.").max(100),
+});
+
+export type BulkImportInput = z.input<typeof importSchema>;
+
+// Save a reviewed batch of imported jobs for a given date + technician.
+// Coordinates already captured during import are reused; anything missing (or
+// edited by hand in the review step) is geocoded here before insert.
+export async function createJobsBulk(
+  input: BulkImportInput,
+): Promise<{ ok: boolean; error: string | null; count?: number }> {
+  const { supabase, userId } = await getOwner();
+  if (!userId) return { ok: false, error: "You must be signed in." };
+
+  const parsed = importSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input." };
+  }
+  const { scheduled_date, technician_id, jobs } = parsed.data;
+
+  // Confirm the technician (if any) belongs to this user before assigning.
+  let technicianId: string | null = null;
+  if (technician_id) {
+    const { data: tech } = await supabase
+      .from("technicians")
+      .select("id")
+      .eq("id", technician_id)
+      .eq("owner_id", userId)
+      .maybeSingle();
+    if (!tech) return { ok: false, error: "That technician no longer exists." };
+    technicianId = technician_id;
+  }
+
+  const rows = await Promise.all(
+    jobs.map(async (job) => {
+      let lat = job.lat ?? null;
+      let lng = job.lng ?? null;
+      if ((lat === null || lng === null) && job.address) {
+        const geo = await geocodeAddress(job.address);
+        if (geo) {
+          lat = geo.lat;
+          lng = geo.lng;
+        }
+      }
+      return {
+        owner_id: userId,
+        title: job.title,
+        customer_name: job.customer_name || null,
+        address: job.address || "",
+        lat,
+        lng,
+        scheduled_date,
+        time_window_start: job.time_window_start || null,
+        time_window_end: job.time_window_end || null,
+        duration_min: job.duration_min,
+        technician_id: technicianId,
+        notes: job.notes || null,
+      };
+    }),
+  );
+
+  const { error } = await supabase.from("jobs").insert(rows);
+  if (error) return { ok: false, error: error.message };
+
+  revalidatePath("/jobs");
+  revalidatePath("/map");
+  return { ok: true, error: null, count: rows.length };
+}
+
 export async function setJobStatus(id: string, status: JobStatus) {
   const { supabase, userId } = await getOwner();
   if (!userId) return { ok: false, error: "You must be signed in." };

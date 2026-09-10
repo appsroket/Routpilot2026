@@ -42,6 +42,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        cta: {
+          DEFAULT: "hsl(var(--cta))",
+          foreground: "hsl(var(--cta-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -52,12 +56,13 @@ const config: Config = {
         },
         // Raw brand tokens for direct use
         brand: {
-          background: "#0a0a0a",
-          surface: "#111111",
-          border: "#1f1f1f",
-          accent: "#b8f724",
-          text: "#ffffff",
-          "text-secondary": "#a0a0a0",
+          background: "#f8f7fe",
+          surface: "#ffffff",
+          border: "#e4e1f0",
+          accent: "#5a2fda",
+          cta: "#fbc21a",
+          text: "#1b1930",
+          "text-secondary": "#6b6b7b",
         },
       },
       borderRadius: {

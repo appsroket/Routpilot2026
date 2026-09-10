@@ -1,4 +1,4 @@
-import { Plus, ClipboardList } from "lucide-react";
+import { Plus, ClipboardList, Sparkles } from "lucide-react";
 
 import type { Job, Technician } from "@/types";
 import { createClient } from "@/lib/supabase/server";
@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { JobsFilters } from "@/components/jobs/jobs-filters";
 import { JobFormDialog } from "@/components/jobs/job-form-dialog";
+import { ImportJobsDialog } from "@/components/jobs/import-jobs-dialog";
 import { JobRow } from "@/components/jobs/job-row";
 import { JobCard } from "@/components/jobs/job-card";
 
@@ -56,18 +57,33 @@ export default async function JobsPage({
 
   const techById = new Map(technicians.map((t) => [t.id, t]));
 
-  const addTrigger = (
-    <JobFormDialog
-      mode="create"
-      technicians={activeTechnicians}
-      defaultDate={date}
-      trigger={
-        <Button>
-          <Plus className="size-4" />
-          Add job
-        </Button>
-      }
-    />
+  const defaultTech = tech !== "all" && tech !== "unassigned" ? tech : undefined;
+
+  const headerActions = (
+    <div className="flex items-center gap-2">
+      <ImportJobsDialog
+        technicians={activeTechnicians}
+        defaultDate={date}
+        defaultTech={defaultTech}
+        trigger={
+          <Button variant="outline">
+            <Sparkles className="size-4" />
+            Paste jobs
+          </Button>
+        }
+      />
+      <JobFormDialog
+        mode="create"
+        technicians={activeTechnicians}
+        defaultDate={date}
+        trigger={
+          <Button>
+            <Plus className="size-4" />
+            Add job
+          </Button>
+        }
+      />
+    </div>
   );
 
   return (
@@ -75,7 +91,7 @@ export default async function JobsPage({
       <PageHeader
         title="Jobs"
         description="Schedule stops and dispatch your crew."
-        action={addTrigger}
+        action={headerActions}
       />
 
       <JobsFilters date={date} tech={tech} technicians={technicians} />

@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * The RoutePilot mark: a lime tile with a black navigation arrow.
+ * The RoutePilot mark: a purple tile with a white navigation arrow.
  * Scales cleanly from a 16px favicon up to a large hero lockup.
  */
 export function LogoMark({ className }: { className?: string }) {
@@ -14,10 +14,10 @@ export function LogoMark({ className }: { className?: string }) {
       role="img"
       aria-label="RoutePilot"
     >
-      <rect width="32" height="32" rx="8" fill="#b8f724" />
+      <rect width="32" height="32" rx="8" fill="#5a2fda" />
       <path
         d="M9 22.5 16 7l7 15.5-7-3.4-7 3.4Z"
-        fill="#0a0a0a"
+        fill="#ffffff"
         strokeLinejoin="round"
       />
     </svg>

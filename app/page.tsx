@@ -1,35 +1,41 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 
-import { Logo } from "@/components/logo";
+import { Navbar } from "@/components/landing/navbar";
+import { Hero } from "@/components/landing/hero";
+import { TradesMarquee } from "@/components/landing/trades-marquee";
+import { RoiCalculator } from "@/components/landing/roi-calculator";
+import { Problem } from "@/components/landing/problem";
+import { Features } from "@/components/landing/features";
+import { Stats } from "@/components/landing/stats";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Testimonials } from "@/components/landing/testimonials";
+import { FinalCta } from "@/components/landing/final-cta";
+import { Faq } from "@/components/landing/faq";
+import { Footer } from "@/components/landing/footer";
+
+export const metadata: Metadata = {
+  title: "RoutePilot — Turn wasted drive time into billable hours",
+  description:
+    "Route optimization for home service crews. RoutePilot builds the fastest route for every technician and texts it to their phone. Start a free trial.",
+};
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-8 bg-background px-6 text-center">
-      <Logo markClassName="h-8 w-8" textClassName="text-2xl" />
-
-      <h1 className="max-w-2xl font-heading text-4xl font-extrabold leading-tight text-foreground sm:text-5xl">
-        Smarter routing and dispatch for field service teams.
-      </h1>
-
-      <p className="max-w-xl text-base text-muted-foreground">
-        Plan routes, assign jobs, and keep every technician moving — all from one
-        clean dashboard.
-      </p>
-
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        <Link
-          href="/dashboard"
-          className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-6 font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          Open dashboard
-        </Link>
-        <Link
-          href="/login"
-          className="inline-flex h-11 items-center justify-center rounded-lg border border-border px-6 font-medium text-foreground transition-colors hover:bg-card focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          Sign in
-        </Link>
-      </div>
-    </main>
+    <div className="min-h-screen bg-background text-foreground">
+      <Navbar />
+      <main>
+        <Hero />
+        <TradesMarquee />
+        <RoiCalculator />
+        <Problem />
+        <Features />
+        <Stats />
+        <HowItWorks />
+        <Testimonials />
+        <FinalCta />
+        <Faq />
+      </main>
+      <Footer />
+    </div>
   );
 }
