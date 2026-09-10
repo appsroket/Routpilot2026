@@ -18,7 +18,10 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "RoutePilot",
+  title: {
+    default: "RoutePilot",
+    template: "%s · RoutePilot",
+  },
   description: "Job routing and dispatch for field service teams.",
 };
 

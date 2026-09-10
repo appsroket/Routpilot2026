@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/logo";
 import { signOut } from "@/app/(dashboard)/actions";
 
 type NavItem = { href: string; label: string; icon: LucideIcon };
@@ -37,15 +38,12 @@ function isActive(pathname: string, href: string) {
 
 function Wordmark() {
   return (
-    <Link href="/dashboard" className="flex items-center gap-3 px-2">
-      <span
-        className="inline-block h-6 w-6 rounded-[6px]"
-        style={{ backgroundColor: "#b8f724" }}
-        aria-hidden
-      />
-      <span className="font-heading text-lg font-bold tracking-tight text-foreground">
-        RoutePilot
-      </span>
+    <Link
+      href="/dashboard"
+      aria-label="RoutePilot home"
+      className="flex items-center rounded-md px-2 py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    >
+      <Logo markClassName="h-6 w-6" />
     </Link>
   );
 }
@@ -64,6 +62,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
             aria-current={active ? "page" : undefined}
             className={cn(
               "relative flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+              "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
               active
                 ? "text-primary"
                 : "text-muted-foreground hover:bg-background hover:text-foreground",

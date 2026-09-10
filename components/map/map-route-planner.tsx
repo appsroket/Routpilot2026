@@ -184,7 +184,7 @@ export function MapRoutePlanner({
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div>
+        <div className="order-2 lg:order-1">
           <div className="mb-2 flex items-center justify-between">
             <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               Route order
@@ -207,7 +207,7 @@ export function MapRoutePlanner({
           )}
         </div>
 
-        <div className="lg:sticky lg:top-20 lg:self-start">
+        <div className="order-1 lg:order-2 lg:sticky lg:top-20 lg:self-start">
           <GoogleMap stops={mapStops} homeBase={homeBase} color={color} polyline={polyline} />
         </div>
       </div>

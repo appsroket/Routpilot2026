@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { JobsFilters } from "@/components/jobs/jobs-filters";
 import { JobFormDialog } from "@/components/jobs/job-form-dialog";
 import { JobRow } from "@/components/jobs/job-row";
+import { JobCard } from "@/components/jobs/job-card";
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
@@ -82,34 +83,51 @@ export default async function JobsPage({
       {jobs.length === 0 ? (
         <EmptyState technicians={activeTechnicians} defaultDate={date} />
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-border bg-card">
-          <table className="w-full min-w-[880px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
-                <th className="px-4 py-3 font-medium">Job</th>
-                <th className="px-4 py-3 font-medium">Customer</th>
-                <th className="px-4 py-3 font-medium">Address</th>
-                <th className="px-4 py-3 font-medium">Time window</th>
-                <th className="px-4 py-3 font-medium">Duration</th>
-                <th className="px-4 py-3 font-medium">Technician</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 text-right font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs.map((job) => (
-                <JobRow
-                  key={job.id}
-                  job={job}
-                  technician={
-                    job.technician_id ? techById.get(job.technician_id) ?? null : null
-                  }
-                  technicians={technicians}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <>
+          {/* Desktop: table */}
+          <div className="hidden overflow-x-auto rounded-lg border border-border bg-card md:block">
+            <table className="w-full min-w-[880px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-border text-xs uppercase tracking-wide text-muted-foreground">
+                  <th className="px-4 py-3 font-medium">Job</th>
+                  <th className="px-4 py-3 font-medium">Customer</th>
+                  <th className="px-4 py-3 font-medium">Address</th>
+                  <th className="px-4 py-3 font-medium">Time window</th>
+                  <th className="px-4 py-3 font-medium">Duration</th>
+                  <th className="px-4 py-3 font-medium">Technician</th>
+                  <th className="px-4 py-3 font-medium">Status</th>
+                  <th className="px-4 py-3 text-right font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {jobs.map((job) => (
+                  <JobRow
+                    key={job.id}
+                    job={job}
+                    technician={
+                      job.technician_id ? techById.get(job.technician_id) ?? null : null
+                    }
+                    technicians={technicians}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile: stacked cards */}
+          <div className="space-y-3 md:hidden">
+            {jobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                technician={
+                  job.technician_id ? techById.get(job.technician_id) ?? null : null
+                }
+                technicians={technicians}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

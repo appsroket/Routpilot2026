@@ -230,6 +230,7 @@ function PeriodTabs({ period }: { period: Period }) {
       href={`/dashboard?period=${value}`}
       className={cn(
         "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         period === value
           ? "bg-primary text-primary-foreground"
           : "text-muted-foreground hover:text-foreground",
@@ -294,7 +295,7 @@ function TodayPanel({
           <li key={t.id}>
             <Link
               href={`/map?date=${today}&tech=${t.id}`}
-              className="group flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 transition-colors hover:border-primary/40"
+              className="group flex items-center justify-between rounded-md border border-border bg-background px-3 py-2 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               <span className="flex min-w-0 items-center gap-2">
                 <span
@@ -332,7 +333,7 @@ function EmptyState() {
       </div>
       <Link
         href="/map"
-        className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         Go to Map & Routes
         <ArrowRight className="size-4" />

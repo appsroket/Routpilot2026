@@ -1,3 +1,5 @@
+import { Logo } from "@/components/logo";
+
 export default function AuthLayout({
   children,
 }: {
@@ -7,16 +9,7 @@ export default function AuthLayout({
     <div className="grid min-h-screen bg-background lg:grid-cols-2">
       {/* Branded panel */}
       <aside className="relative hidden flex-col justify-between border-r border-border bg-card p-12 lg:flex">
-        <div className="flex items-center gap-3">
-          <span
-            className="inline-block h-6 w-6 rounded-[6px]"
-            style={{ backgroundColor: "#b8f724" }}
-            aria-hidden
-          />
-          <span className="font-heading text-xl font-bold tracking-tight text-foreground">
-            RoutePilot
-          </span>
-        </div>
+        <Logo markClassName="h-7 w-7" textClassName="text-xl" />
 
         <div className="max-w-md">
           <h1 className="font-heading text-4xl font-extrabold leading-tight text-foreground">
@@ -37,16 +30,7 @@ export default function AuthLayout({
       <main className="flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-sm">
           {/* Compact wordmark for small screens */}
-          <div className="mb-8 flex items-center gap-3 lg:hidden">
-            <span
-              className="inline-block h-6 w-6 rounded-[6px]"
-              style={{ backgroundColor: "#b8f724" }}
-              aria-hidden
-            />
-            <span className="font-heading text-xl font-bold tracking-tight text-foreground">
-              RoutePilot
-            </span>
-          </div>
+          <Logo markClassName="h-7 w-7" textClassName="text-xl" className="mb-8 lg:hidden" />
           {children}
         </div>
       </main>
